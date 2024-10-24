@@ -1,0 +1,4 @@
+%dw 2.0
+
+type auto_02e10ffb_0310_471e_8526_e1b6bfacdba1_Output_Payload = Array<{|  contactid: Number,   emailaddress1?: String,   firstname?: String,   fullname?: String,   lastname?: String,   parentcustomerid?: Number,   telephone1?: String,   contact_createdon?: Date,   contact_modifiedon?: Date,   account_name: String,   account_createdon?: Date,   account_modifiedon?: Date|}>
+

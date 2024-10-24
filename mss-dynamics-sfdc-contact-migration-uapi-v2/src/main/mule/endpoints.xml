@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="http-flowFlow" doc:id="e54bcf46-c0cc-4977-91e6-1ace3364d428" >
+		<http:listener doc:name="/migratecontacts" doc:id="e5eac9c3-599f-4889-921e-709273ad9258" config-ref="HTTP_Listener_config" path="/migratecontacts" />
+		<async doc:name="Async" doc:id="e6b9ec42-c760-42f9-a6d1-e63f75f83af2" >
+			<flow-ref doc:name="Flow Reference" doc:id="3ddb5c2f-2daa-4a8c-8ecf-1948d5b63580" name="businessLogicFlow"/>
+		</async>
+		<ee:transform doc:name="Transform Message" doc:id="f7ab0c2b-af59-4caa-93dd-e3403aa8a698" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	status: "Job Triggered",
+	StartTime: now(),
+	correlationId: correlationId
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

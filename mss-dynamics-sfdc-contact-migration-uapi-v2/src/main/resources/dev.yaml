@@ -1,0 +1,16 @@
+http:
+  host: "localhost"
+  port: "8081"
+
+sf:
+  user: "sdunna@miraclesoft.com"
+  password: "Yamini@2019"
+  token: "e9VOPj8Bblwo4GJ8tnJMkOou"
+  
+syncAccount: "true"
+
+batch:
+  block:
+    size: "100"
+  agg:
+    size: "5"

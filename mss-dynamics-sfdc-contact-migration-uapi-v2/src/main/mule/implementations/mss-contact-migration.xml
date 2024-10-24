@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+      xmlns:microsoft-dynamics-crm="http://www.mulesoft.org/schema/mule/microsoft-dynamics-crm"
+      xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+      xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/microsoft-dynamics-crm http://www.mulesoft.org/schema/mule/microsoft-dynamics-crm/current/mule-microsoft-dynamics-crm.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+
+
+	<flow name="businessLogicFlow" doc:id="b8dfdf0c-ff21-4dcf-96a9-4de4e61f3998" >
+		<logger level="INFO" doc:name="Start Logger" doc:id="00431362-6a11-4cf9-9d99-56e8ec7003f0" message='#["Start Flow"]'/>
+		
+		<flow-ref doc:name="Call get-contacts-by-timestampFlow" doc:id="05381936-08b8-4eca-a9c4-c2a463a3a80d" name="get-contacts-by-timestampFlow"/>
+		<logger level="INFO" doc:name="Log Payload from DB" doc:id="54e519a6-7a6e-4340-9bdd-a3826143842f" message="#[payload]"/>
+		<batch:job jobName="migrateContactsBatch" doc:id="46602d4a-23c2-4ad4-ae9b-6bdb85d91405" blockSize="${batch.block.size}">
+        <batch:process-records >
+            <batch:step name="getContactsFromSalesforce" doc:id="2c62985c-63e2-4534-bfca-da7c40f39d8d" >
+					
+					
+					<flow-ref doc:name="Call get-contacts-sfdcFlow" doc:id="ae2b68d3-0e15-4275-9eba-90346c9f877f" name="get-contacts-sfdcFlow" target="contactInSalesforce"/>
+					<ee:transform doc:name="Set Id to payload" doc:id="63ce5cd3-36d9-483c-bb56-ca5e3d5e825a" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload ++ {
+	"id" : if (vars.contactInSalesforce[0].Id != null) vars.contactInSalesforce[0].Id else null
+}]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+            </batch:step>
+            <batch:step name="findOrCreateAccountInSalesforceStep" doc:id="24a07feb-aeed-4560-8a4f-6250b4235d6f" >
+					<choice doc:name="Has Account and syncAccount is enabled" doc:id="7f50bf25-64e9-4889-8634-aa12b21cbfd5" >
+						<when expression="#[(payload[&quot;account_name&quot;] != null) and ('syncAccount' == 'syncAccount')]" >
+							
+							<flow-ref doc:name="Call get-accounts-sfdcFlow" doc:id="3c865abc-d3c7-468b-9f46-567a98cd2c1e" name="get-accounts-sfdcFlow" target="sfAccount"/>
+							<choice doc:name="No Matching Account found in Salesforce" doc:id="e5ab043f-0266-4e67-adbc-c14a3d955121" >
+								<when expression="#[sizeOf(vars.sfAccount) == 0]" >
+									<ee:transform doc:name="Set Payload in sfAccountPayload Var" doc:id="e88e852b-99d6-4ef2-baa7-d3eab84006c5">
+										<ee:message>
+										</ee:message>
+										<ee:variables >
+											<ee:set-variable variableName="sfAccountPayload" ><![CDATA[%dw 2.0
+output application/java
+---
+[{
+	Name: payload.account_name
+	}]]]></ee:set-variable>
+										</ee:variables>
+									</ee:transform>
+									<flow-ref doc:name="Call create-account-sfdcFlow" doc:id="798495e6-0d6e-4954-a56f-9a0702b04bd7" name="create-account-sfdcFlow"/>
+									
+								
+
+</when>
+								<otherwise >
+									<set-variable value="#[vars.sfAccount.Id[0]]" doc:name="Save found AccountId" doc:id="edc4e33a-b52b-42dd-a6eb-3474505a928f" variableName="accountId"/>
+								</otherwise>
+							</choice>
+							<ee:transform doc:name="Set accountId to payload" doc:id="c6601e2b-de58-476e-bf01-80cfb9d89939" >
+								<ee:message >
+									<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload ++ {
+	"accountId" : vars.accountId
+}]]></ee:set-payload>
+								</ee:message>
+							</ee:transform>
+						
+
+</when>
+						<otherwise >
+							<ee:transform doc:name="Remove accountId" doc:id="21194cce-1a43-4ca0-bc18-b8e87c94b9ef" >
+								<ee:message >
+									<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload - "accountId"]]></ee:set-payload>
+								</ee:message>
+							</ee:transform>
+						</otherwise>
+					</choice>
+				</batch:step>
+				<batch:step name="upsertContactsInSalesforceStep" doc:id="8fadad93-59d9-4298-bce7-8201d20f9ee0">
+                <ee:transform doc:name="Prepare Contact for Upsert" doc:id="90e41dcb-4aff-468f-9bcd-d8a478e61d3b">
+						<ee:message>
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	"Id"        : payload.id,
+	"AccountId" : payload.accountId,
+	"Email"     : payload.emailaddress1,
+	"FirstName" : payload.firstname,
+	"LastName"  : payload.lastname,
+	"Phone"     : payload.telephone1
+}
+]]></ee:set-payload>
+
+						</ee:message>
+						<ee:variables >
+						</ee:variables>
+					
+</ee:transform>
+					<batch:aggregator doc:name="Batch Aggregator" doc:id="b8791ae6-0239-4895-b33d-259153810b13" size="${batch.agg.size}">
+						<logger level="INFO" doc:name="Log before upsert" doc:id="bbaded47-7f2f-45e2-817c-e58e51310b6f" message="#[output application/json --- payload]" />
+						
+						<flow-ref doc:name="Call upsert-contact-sfdcFlow" doc:id="00795413-be47-4a8b-ba5e-4700a5ad50f1" name="upsert-contact-sfdcFlow"/>
+						<logger level="INFO" doc:name="Log result" doc:id="e0989996-52e3-4ee7-b11d-75e696f82be2" message="#[output application/json --- payload]"/>
+                </batch:aggregator>
+            </batch:step>
+        </batch:process-records>
+        <batch:on-complete >
+				<ee:transform doc:name="Prepare migration report" doc:id="4695c1c9-23f1-4193-b12e-439d719c5c9c">
+                        <ee:message>
+                            <ee:set-payload><![CDATA[%dw 2.0
+ output text/plain
+ ---
+ "Migration Report: \n"
+
+ ++ "\n Time [milliseconds]: " 		++ payload.elapsedTimeInMillis!
+ ++ "\n Total Records: "				++ payload.totalRecords!
+ ++ "\n Successful Records: "		++ payload.successfulRecords!
+ ++ "\n Failed Records: "			++ payload.failedRecords!
+ ++ "\n Loaded Records: "			++ payload.loadedRecords!
+ ++ "\n Processed Records: " 		++ payload.processedRecords!]]></ee:set-payload>
+                        </ee:message>
+                    </ee:transform>
+				<logger level="INFO" doc:name="End Logger" doc:id="d313101d-4893-47c5-bac0-805babc1dee7" message="#[payload]"/>
+        
+</batch:on-complete>
+    </batch:job>
+		<error-handler ref="global-error-handler" />
+
+
+</flow>
+</mule>
+
+
+        

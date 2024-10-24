@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+	<flow name="upsert-contact-sfdcFlow" doc:id="b535a61f-aa04-44ea-9976-17980e5179af" >
+		<salesforce:upsert doc:name="Upsert Contact in Salesforce" doc:id="d62eca42-266b-4999-b911-e018f5f59f0a" config-ref="Salesforce_Config" objectType="Contact" externalIdFieldName="Id">
+						</salesforce:upsert>
+	</flow>
+</mule>

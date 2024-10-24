@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="5cdbf348-f7f7-40db-8876-e3c6c9ab18dc" >
+		<salesforce:basic-connection username="${sf.user}" password="${sf.password}" securityToken="${sf.token}" />
+	</salesforce:sfdc-config>
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="b18846c7-3960-44ec-81f1-eed6f3232104" >
+		<http:listener-connection host="${http.host}" port="${http.port}" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="d9bad236-074e-4159-85e4-83f258d633a7" >
+		<db:my-sql-connection host="172.17.35.52" port="3306" user="integration" password="integration" database="digital_integrations_db" />
+	</db:config>
+	<configuration-properties doc:name="Configuration properties" doc:id="5404bc08-c2ce-4897-981d-c4a3acd76b14" file="dev.yaml" />
+	<configuration doc:name="Configuration" doc:id="aa33b53e-1426-406e-b99c-ccca70d6873a" defaultErrorHandler-ref="global-error-handler" />
+</mule>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<flow name="get-contacts-by-timestampFlow" doc:id="39a1a108-3f6b-4163-8fc5-2213d43606b8" >
+		<db:select doc:name="Select contacts and accounts" doc:id="b5bcb081-61ab-4661-9e6f-1136d188ed19" config-ref="Database_Config">
+			<db:sql ><![CDATA[SELECT
+  c.contactid,
+  c.emailaddress1,
+  c.firstname,
+  c.fullname,
+  c.lastname,
+  c.parentcustomerid,
+  c.telephone1,
+  c.createdon AS contact_createdon,
+  c.modifiedon AS contact_modifiedon,
+  a.name AS account_name,
+  a.createdon AS account_createdon,
+  a.modifiedon AS account_modifiedon
+FROM
+  contact c
+INNER JOIN
+  account a ON c.parentcustomerid = a.accountid
+WHERE
+  c.createdon > :timestamp
+  or c.modifiedon > :timestamp
+  or a.createdon > :timestamp
+  or a.modifiedon > :timestamp;
+]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{timestamp: attributes.queryParams.timestamp}]]]></db:input-parameters>
+		</db:select>
+		</flow>
+
+</mule>

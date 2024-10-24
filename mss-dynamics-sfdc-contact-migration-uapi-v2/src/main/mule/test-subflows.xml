@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="get-contact-account-from-db" doc:id="076c1746-1047-43dc-bfdc-eb01244e3eb0" >
+		<http:listener doc:name="/db/getContacts" doc:id="bdc5b232-b4c0-4eca-90f7-20a5615a6ff2" config-ref="HTTP_Listener_config" path="/db/getContacts"/>
+		<flow-ref doc:name="Call get-contacts-by-timestampFlow" doc:id="e52d7b81-57c5-4847-a3fb-50fdc71ea2c3" name="get-contacts-by-timestampFlow"/>
+		<ee:transform doc:name="Prepare result of get contact and account from DB" doc:id="711503a0-fbd0-4555-8833-a33b19b8feb8" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="get-account-from-sfdc" doc:id="f7b20353-f195-48c1-b674-9fb3f38ccf76" >
+		<http:listener doc:name="/sfdc/getAccounts" doc:id="231ad439-893a-4df7-a0d4-ae1c143ec51d" config-ref="HTTP_Listener_config" path="/sfdc/getAccounts"/>
+		<flow-ref doc:name="Call get-accounts-sfdcFlow" doc:id="c86ab4da-177e-4187-badd-0cdc54a46962" name="get-accounts-sfdcFlow" />
+		<ee:transform doc:name="Prepare result of get account from SFDC" doc:id="0d1b6db9-93e5-4fe8-ab41-c8212a337967">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="create-account-in-sfdc" doc:id="c7799490-084b-4769-b3d0-ee3e2e32e012" >
+		<http:listener doc:name="/sfdc/createAccount" doc:id="4012746c-66ca-4ef3-8326-2231b1a741cd" config-ref="HTTP_Listener_config" path="/sfdc/createAccount"/>
+		<ee:transform doc:name="Set sfAccountPayload Var" doc:id="be3012f0-3ac7-42d4-a858-edd0b5dbc488">
+				<ee:message>
+				</ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="sfAccountPayload"><![CDATA[%dw 2.0
+output application/java
+---
+[{
+	Name: payload.account_name
+	}]]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		<flow-ref doc:name="Call create-account-sfdcFlow" doc:id="72c634f7-e146-4ff0-ad33-975153daa4de" name="create-account-sfdcFlow"/>
+		<ee:transform doc:name="Prepare result of create account in SFDC" doc:id="bf31a266-ad5b-4e3a-aa98-256dd2d39da0" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"AccountID":vars.accountId
+	
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="get-contact-from-sfdc" doc:id="b9db1549-645b-414c-b680-4cb4646e7f5f" >
+		<http:listener doc:name="/sfdc/getContact" doc:id="16680ca2-00fd-4c2b-9cc4-bb0a74402ae8" config-ref="HTTP_Listener_config" path="/sfdc/getContact"/>
+		<flow-ref doc:name="Call get-contacts-sfdcFlow" doc:id="6b7c282c-27e0-4862-b90f-61704368d1dd" name="get-contacts-sfdcFlow" />
+		<ee:transform doc:name="Prepare result of get contact from SFDC" doc:id="dbd66c01-1062-4461-9830-604abb3db70d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="upsert-contact-in-sfdc" doc:id="2f67475e-956a-4168-92ef-612ed021ba9b" >
+		<http:listener doc:name="/sfdc/upsertContact" doc:id="6c3955a9-8247-4fc3-a65c-04dd6a7efad1" config-ref="HTTP_Listener_config" path="/sfdc/upsertContact"/>
+		<ee:transform doc:name="Prepare Payload to Upsert" doc:id="91c3dd73-c66f-476d-8825-15732fff191b">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+[{
+	"Id"        : payload.id,
+	"AccountId" : payload.accountId,
+	"Email"     : payload.emailaddress1,
+	"FirstName" : payload.firstname,
+	"LastName"  : payload.lastname,
+	"Phone"     : payload.telephone1
+}]
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<flow-ref doc:name="Call upsert-contact-sfdcFlow" doc:id="bdcd48f9-0c1e-427b-9b7b-27d619f040e6" name="upsert-contact-sfdcFlow" />
+		<ee:transform doc:name="Prepare result of upsert contact in SFDC" doc:id="ac3cc0a3-5eff-4ad3-98d7-9b0b6eed317b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
