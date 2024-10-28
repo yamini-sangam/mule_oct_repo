@@ -1,0 +1,648 @@
+
+*******************************************************************************************************
+* mss-dynamics-sfdc-contact-migration-uapi-v2   * default                        * DEPLOYED           *
+*******************************************************************************************************
+
+INFO  2024-10-24 20:38:59,161 [[MuleRuntime].uber.01: [mss-dynamics-sfdc-contact-migration-uapi-v2].uber@org.mule.runtime.module.extension.internal.runtime.source.ExtensionMessageSource.lambda$null$17:435 @15ab1136] [processor: ; event: ] org.mule.runtime.module.extension.internal.runtime.source.ExtensionMessageSource: Message source 'listener' on flow 'get-account-from-sfdc' successfully started
+INFO  2024-10-24 20:38:59,161 [[MuleRuntime].uber.03: [mss-dynamics-sfdc-contact-migration-uapi-v2].uber@org.mule.runtime.module.extension.internal.runtime.source.ExtensionMessageSource.lambda$null$17:435 @3649c4a] [processor: ; event: ] org.mule.runtime.module.extension.internal.runtime.source.ExtensionMessageSource: Message source 'listener' on flow 'get-contact-account-from-db' successfully started
+INFO  2024-10-24 20:38:59,161 [[MuleRuntime].uber.08: [mss-dynamics-sfdc-contact-migration-uapi-v2].uber@org.mule.runtime.module.extension.internal.runtime.source.ExtensionMessageSource.lambda$null$17:435 @583998c] [processor: ; event: ] org.mule.runtime.module.extension.internal.runtime.source.ExtensionMessageSource: Message source 'listener' on flow 'http-flowFlow' successfully started
+INFO  2024-10-24 20:38:59,161 [[MuleRuntime].uber.05: [mss-dynamics-sfdc-contact-migration-uapi-v2].uber@org.mule.runtime.module.extension.internal.runtime.source.ExtensionMessageSource.lambda$null$17:435 @36a6b262] [processor: ; event: ] org.mule.runtime.module.extension.internal.runtime.source.ExtensionMessageSource: Message source 'listener' on flow 'create-account-in-sfdc' successfully started
+INFO  2024-10-24 20:38:59,162 [[MuleRuntime].uber.07: [mss-dynamics-sfdc-contact-migration-uapi-v2].uber@org.mule.runtime.module.extension.internal.runtime.source.ExtensionMessageSource.lambda$null$17:435 @2854f34e] [processor: ; event: ] org.mule.runtime.module.extension.internal.runtime.source.ExtensionMessageSource: Message source 'listener' on flow 'upsert-contact-in-sfdc' successfully started
+INFO  2024-10-24 20:38:59,162 [[MuleRuntime].uber.06: [mss-dynamics-sfdc-contact-migration-uapi-v2].uber@org.mule.runtime.module.extension.internal.runtime.source.ExtensionMessageSource.lambda$null$17:435 @668deeb4] [processor: ; event: ] org.mule.runtime.module.extension.internal.runtime.source.ExtensionMessageSource: Message source 'listener' on flow 'get-contact-from-sfdc' successfully started
+INFO  2024-10-24 20:39:21,297 [[MuleRuntime].uber.06: [mss-dynamics-sfdc-contact-migration-uapi-v2].businessLogicFlow.CPU_LITE @7cb64fd2] [processor: businessLogicFlow/processors/0; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] org.mule.runtime.core.internal.processor.LoggerMessageProcessor: Start Flow
+INFO  2024-10-24 20:39:24,693 [[MuleRuntime].uber.05: [mss-dynamics-sfdc-contact-migration-uapi-v2].get-contacts-by-timestampFlow.BLOCKING @52f9b873] [processor: businessLogicFlow/processors/2; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] org.mule.runtime.core.internal.processor.LoggerMessageProcessor: [{contactid=4, emailaddress1=john.doe@example.com, firstname=John, fullname=John Doe, lastname=Doe, parentcustomerid=1, telephone1=555-1234, contact_createdon=2023-01-01 10:30:00.0, contact_modifiedon=2023-01-01 11:00:00.0, account_name=ABC Corporation, account_createdon=2023-01-01 10:00:00.0, account_modifiedon=2023-01-01 11:00:00.0}, {contactid=7, emailaddress1=alice.brown@abc.com, firstname=Alice, fullname=Alice Brown, lastname=Brown, parentcustomerid=1, telephone1=555-1111, contact_createdon=2023-01-01 09:00:00.0, contact_modifiedon=2023-01-01 09:30:00.0, account_name=ABC Corporation, account_createdon=2023-01-01 10:00:00.0, account_modifiedon=2023-01-01 11:00:00.0}, {contactid=8, emailaddress1=bob.jones@abc.com, firstname=Bob, fullname=Bob Jones, lastname=Jones, parentcustomerid=1, telephone1=555-1112, contact_createdon=2023-01-01 09:45:00.0, contact_modifiedon=2023-01-01 10:15:00.0, account_name=ABC Corporation, account_createdon=2023-01-01 10:00:00.0, account_modifiedon=2023-01-01 11:00:00.0}, {contactid=9, emailaddress1=carol.white@abc.com, firstname=Carol, fullname=Carol White, lastname=White, parentcustomerid=1, telephone1=555-1113, contact_createdon=2023-01-01 10:30:00.0, contact_modifiedon=2023-01-01 11:00:00.0, account_name=ABC Corporation, account_createdon=2023-01-01 10:00:00.0, account_modifiedon=2023-01-01 11:00:00.0}, {contactid=10, emailaddress1=dave.clark@abc.com, firstname=Dave, fullname=Dave Clark, lastname=Clark, parentcustomerid=1, telephone1=555-1114, contact_createdon=2023-01-01 11:15:00.0, contact_modifiedon=2023-01-01 11:45:00.0, account_name=ABC Corporation, account_createdon=2023-01-01 10:00:00.0, account_modifiedon=2023-01-01 11:00:00.0}, {contactid=11, emailaddress1=eve.hill@abc.com, firstname=Eve, fullname=Eve Hill, lastname=Hill, parentcustomerid=1, telephone1=555-1115, contact_createdon=2023-01-01 12:00:00.0, contact_modifiedon=2023-01-01 12:30:00.0, account_name=ABC Corporation, account_createdon=2023-01-01 10:00:00.0, account_modifiedon=2023-01-01 11:00:00.0}, {contactid=5, emailaddress1=jane.smith@example.com, firstname=Jane, fullname=Jane Smith, lastname=Smith, parentcustomerid=2, telephone1=555-5678, contact_createdon=2023-05-12 14:20:00.0, contact_modifiedon=2023-05-12 15:00:00.0, account_name=XYZ Enterprises, account_createdon=2023-03-05 09:20:00.0, account_modifiedon=2023-03-05 09:45:00.0}, {contactid=12, emailaddress1=frank.kent@xyz.com, firstname=Frank, fullname=Frank Kent, lastname=Kent, parentcustomerid=2, telephone1=555-2221, contact_createdon=2023-03-05 09:00:00.0, contact_modifiedon=2023-03-05 09:30:00.0, account_name=XYZ Enterprises, account_createdon=2023-03-05 09:20:00.0, account_modifiedon=2023-03-05 09:45:00.0}, {contactid=13, emailaddress1=grace.lee@xyz.com, firstname=Grace, fullname=Grace Lee, lastname=Lee, parentcustomerid=2, telephone1=555-2222, contact_createdon=2023-03-05 09:45:00.0, contact_modifiedon=2023-03-05 10:15:00.0, account_name=XYZ Enterprises, account_createdon=2023-03-05 09:20:00.0, account_modifiedon=2023-03-05 09:45:00.0}, {contactid=14, emailaddress1=hank.west@xyz.com, firstname=Hank, fullname=Hank West, lastname=West, parentcustomerid=2, telephone1=555-2223, contact_createdon=2023-03-05 10:30:00.0, contact_modifiedon=2023-03-05 11:00:00.0, account_name=XYZ Enterprises, account_createdon=2023-03-05 09:20:00.0, account_modifiedon=2023-03-05 09:45:00.0}, {contactid=15, emailaddress1=ivy.nash@xyz.com, firstname=Ivy, fullname=Ivy Nash, lastname=Nash, parentcustomerid=2, telephone1=555-2224, contact_createdon=2023-03-05 11:15:00.0, contact_modifiedon=2023-03-05 11:45:00.0, account_name=XYZ Enterprises, account_createdon=2023-03-05 09:20:00.0, account_modifiedon=2023-03-05 09:45:00.0}, {contactid=16, emailaddress1=jack.owens@xyz.com, firstname=Jack, fullname=Jack Owens, lastname=Owens, parentcustomerid=2, telephone1=555-2225, contact_createdon=2023-03-05 12:00:00.0, contact_modifiedon=2023-03-05 12:30:00.0, account_name=XYZ Enterprises, account_createdon=2023-03-05 09:20:00.0, account_modifiedon=2023-03-05 09:45:00.0}, {contactid=6, emailaddress1=michael.jones@example.com, firstname=Michael, fullname=Michael Jones, lastname=Jones, parentcustomerid=3, telephone1=555-8765, contact_createdon=2023-09-18 08:10:00.0, contact_modifiedon=2023-09-18 09:30:00.0, account_name=Global Solutions, account_createdon=2023-07-12 14:30:00.0, account_modifiedon=2023-07-12 14:50:00.0}, {contactid=17, emailaddress1=kate.perez@global.com, firstname=Kate, fullname=Kate Perez, lastname=Perez, parentcustomerid=3, telephone1=555-3331, contact_createdon=2023-07-12 09:00:00.0, contact_modifiedon=2023-07-12 09:30:00.0, account_name=Global Solutions, account_createdon=2023-07-12 14:30:00.0, account_modifiedon=2023-07-12 14:50:00.0}, {contactid=18, emailaddress1=leo.ross@global.com, firstname=Leo, fullname=Leo Ross, lastname=Ross, parentcustomerid=3, telephone1=555-3332, contact_createdon=2023-07-12 09:45:00.0, contact_modifiedon=2023-07-12 10:15:00.0, account_name=Global Solutions, account_createdon=2023-07-12 14:30:00.0, account_modifiedon=2023-07-12 14:50:00.0}, {contactid=19, emailaddress1=mia.scott@global.com, firstname=Mia, fullname=Mia Scott, lastname=Scott, parentcustomerid=3, telephone1=555-3333, contact_createdon=2023-07-12 10:30:00.0, contact_modifiedon=2023-07-12 11:00:00.0, account_name=Global Solutions, account_createdon=2023-07-12 14:30:00.0, account_modifiedon=2023-07-12 14:50:00.0}, {contactid=20, emailaddress1=nick.taylor@global.com, firstname=Nick, fullname=Nick Taylor, lastname=Taylor, parentcustomerid=3, telephone1=555-3334, contact_createdon=2023-07-12 11:15:00.0, contact_modifiedon=2023-07-12 11:45:00.0, account_name=Global Solutions, account_createdon=2023-07-12 14:30:00.0, account_modifiedon=2023-07-12 14:50:00.0}, {contactid=21, emailaddress1=olivia.ward@global.com, firstname=Olivia, fullname=Olivia Ward, lastname=Ward, parentcustomerid=3, telephone1=555-3335, contact_createdon=2023-07-12 12:00:00.0, contact_modifiedon=2023-07-12 12:30:00.0, account_name=Global Solutions, account_createdon=2023-07-12 14:30:00.0, account_modifiedon=2023-07-12 14:50:00.0}, {contactid=22, emailaddress1=peter.young@tech.com, firstname=Peter, fullname=Peter Young, lastname=Young, parentcustomerid=4, telephone1=555-4441, contact_createdon=2023-08-15 09:00:00.0, contact_modifiedon=2023-08-15 09:30:00.0, account_name=Tech Innovators, account_createdon=2023-08-15 11:45:00.0, account_modifiedon=2023-08-15 12:15:00.0}, {contactid=23, emailaddress1=quincy.zhao@tech.com, firstname=Quincy, fullname=Quincy Zhao, lastname=Zhao, parentcustomerid=4, telephone1=555-4442, contact_createdon=2023-08-15 09:45:00.0, contact_modifiedon=2023-08-15 10:15:00.0, account_name=Tech Innovators, account_createdon=2023-08-15 11:45:00.0, account_modifiedon=2023-08-15 12:15:00.0}, {contactid=24, emailaddress1=rachel.baker@tech.com, firstname=Rachel, fullname=Rachel Baker, lastname=Baker, parentcustomerid=4, telephone1=555-4443, contact_createdon=2023-08-15 10:30:00.0, contact_modifiedon=2023-08-15 11:00:00.0, account_name=Tech Innovators, account_createdon=2023-08-15 11:45:00.0, account_modifiedon=2023-08-15 12:15:00.0}, {contactid=25, emailaddress1=simon.carter@nextgen.com, firstname=Simon, fullname=Simon Carter, lastname=Carter, parentcustomerid=5, telephone1=555-5551, contact_createdon=2023-09-22 09:00:00.0, contact_modifiedon=2023-09-22 09:30:00.0, account_name=NextGen Solutions, account_createdon=2023-09-22 10:30:00.0, account_modifiedon=2023-09-22 10:50:00.0}, {contactid=26, emailaddress1=terry.daniels@nextgen.com, firstname=Terry, fullname=Terry Daniels, lastname=Daniels, parentcustomerid=5, telephone1=555-5552, contact_createdon=2023-09-22 09:45:00.0, contact_modifiedon=2023-09-22 10:15:00.0, account_name=NextGen Solutions, account_createdon=2023-09-22 10:30:00.0, account_modifiedon=2023-09-22 10:50:00.0}, {contactid=27, emailaddress1=ursula.evans@nextgen.com, firstname=Ursula, fullname=Ursula Evans, lastname=Evans, parentcustomerid=5, telephone1=555-5553, contact_createdon=2023-09-22 10:30:00.0, contact_modifiedon=2023-09-22 11:00:00.0, account_name=NextGen Solutions, account_createdon=2023-09-22 10:30:00.0, account_modifiedon=2023-09-22 10:50:00.0}, {contactid=28, emailaddress1=victor.franklin@nextgen.com, firstname=Victor, fullname=Victor Franklin, lastname=Franklin, parentcustomerid=5, telephone1=555-5554, contact_createdon=2023-09-22 11:15:00.0, contact_modifiedon=2023-09-22 11:45:00.0, account_name=NextGen Solutions, account_createdon=2023-09-22 10:30:00.0, account_modifiedon=2023-09-22 10:50:00.0}]
+INFO  2024-10-24 20:39:27,997 [[MuleRuntime].uber.07: [mss-dynamics-sfdc-contact-migration-uapi-v2].businessLogicFlow.BLOCKING @279aa6bb] [processor: ; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] com.mulesoft.mule.runtime.module.batch.internal.engine.DefaultBatchEngine: Created instance 'f6889a80-9219-11ef-876c-8cec4b58ad7e' for batch job 'migrateContactsBatch'
+INFO  2024-10-24 20:39:28,002 [[MuleRuntime].uber.07: [mss-dynamics-sfdc-contact-migration-uapi-v2].businessLogicFlow.BLOCKING @279aa6bb] [processor: ; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] com.mulesoft.mule.runtime.module.batch.internal.engine.queue.BatchQueueLoader: Starting loading phase for instance 'f6889a80-9219-11ef-876c-8cec4b58ad7e' of job 'migrateContactsBatch'
+INFO  2024-10-24 20:39:28,042 [[MuleRuntime].uber.07: [mss-dynamics-sfdc-contact-migration-uapi-v2].businessLogicFlow.BLOCKING @279aa6bb] [processor: ; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] com.mulesoft.mule.runtime.module.batch.internal.engine.queue.BatchQueueLoader: Finished loading phase for instance f6889a80-9219-11ef-876c-8cec4b58ad7e of job migrateContactsBatch. 25 records were loaded
+INFO  2024-10-24 20:39:28,045 [[MuleRuntime].uber.07: [mss-dynamics-sfdc-contact-migration-uapi-v2].businessLogicFlow.BLOCKING @279aa6bb] [processor: ; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] com.mulesoft.mule.runtime.module.batch.internal.engine.DefaultBatchEngine: Started execution of instance 'f6889a80-9219-11ef-876c-8cec4b58ad7e' of job 'migrateContactsBatch'
+INFO  2024-10-24 20:40:52,812 [[MuleRuntime].uber.06: [mss-dynamics-sfdc-contact-migration-uapi-v2].batch-job-migrateContactsBatch-work-manager @5eba3403] [processor: businessLogicFlow/processors/3/route/0/route/0/processors/0; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] com.mulesoft.mule.runtime.module.batch.internal.DefaultBatchStep: Step getContactsFromSalesforce finished processing all records for instance f6889a80-9219-11ef-876c-8cec4b58ad7e of job migrateContactsBatch
+INFO  2024-10-24 20:42:47,016 [[MuleRuntime].uber.07: [mss-dynamics-sfdc-contact-migration-uapi-v2].batch-job-migrateContactsBatch-work-manager @5eba3403] [processor: businessLogicFlow/processors/3/route/0/route/1/processors/0/route/0/processors/0; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] com.mulesoft.mule.runtime.module.batch.internal.DefaultBatchStep: Step findOrCreateAccountInSalesforceStep finished processing all records for instance f6889a80-9219-11ef-876c-8cec4b58ad7e of job migrateContactsBatch
+INFO  2024-10-24 20:42:55,427 [[MuleRuntime].uber.06: [mss-dynamics-sfdc-contact-migration-uapi-v2].batch-job-migrateContactsBatch-work-manager @5eba3403] [processor: businessLogicFlow/processors/3/route/0/route/2/aggregator/processors/0; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] org.mule.runtime.core.internal.processor.LoggerMessageProcessor: [
+  {
+    "Id": "003J400000AkzWwIAJ",
+    "AccountId": "001J400000MzZLbIAN",
+    "Email": "john.doe@example.com",
+    "FirstName": "John",
+    "LastName": "Doe",
+    "Phone": "555-1234"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000MzZLbIAN",
+    "Email": "alice.brown@abc.com",
+    "FirstName": "Alice",
+    "LastName": "Brown",
+    "Phone": "555-1111"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000MzZLbIAN",
+    "Email": "bob.jones@abc.com",
+    "FirstName": "Bob",
+    "LastName": "Jones",
+    "Phone": "555-1112"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000MzZLbIAN",
+    "Email": "carol.white@abc.com",
+    "FirstName": "Carol",
+    "LastName": "White",
+    "Phone": "555-1113"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000MzZLbIAN",
+    "Email": "dave.clark@abc.com",
+    "FirstName": "Dave",
+    "LastName": "Clark",
+    "Phone": "555-1114"
+  }
+]
+INFO  2024-10-24 20:42:58,668 [[MuleRuntime].uber.02: [mss-dynamics-sfdc-contact-migration-uapi-v2].upsert-contact-sfdcFlow.BLOCKING @378d7e18] [processor: businessLogicFlow/processors/3/route/0/route/2/aggregator/processors/2; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] org.mule.runtime.core.internal.processor.LoggerMessageProcessor: {
+  "id": null,
+  "items": [
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": false,
+        "success": true,
+        "id": "003J400000AkzWwIAJ",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000AkzWwIAJ",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5gAIAR",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5gAIAR",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5gBIAR",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5gBIAR",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5gCIAR",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5gCIAR",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5gDIAR",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5gDIAR",
+      "statusCode": null,
+      "successful": true
+    }
+  ],
+  "successful": true
+}
+INFO  2024-10-24 20:43:02,099 [[MuleRuntime].uber.06: [mss-dynamics-sfdc-contact-migration-uapi-v2].batch-job-migrateContactsBatch-work-manager @5eba3403] [processor: businessLogicFlow/processors/3/route/0/route/2/aggregator/processors/0; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] org.mule.runtime.core.internal.processor.LoggerMessageProcessor: [
+  {
+    "Id": null,
+    "AccountId": "001J400000MzZLbIAN",
+    "Email": "eve.hill@abc.com",
+    "FirstName": "Eve",
+    "LastName": "Hill",
+    "Phone": "555-1115"
+  },
+  {
+    "Id": "003J400000Al3VsIAJ",
+    "AccountId": "001J400000MzZU0IAN",
+    "Email": "jane.smith@example.com",
+    "FirstName": "Jane",
+    "LastName": "Smith",
+    "Phone": "555-5678"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000MzZU0IAN",
+    "Email": "frank.kent@xyz.com",
+    "FirstName": "Frank",
+    "LastName": "Kent",
+    "Phone": "555-2221"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000MzZU0IAN",
+    "Email": "grace.lee@xyz.com",
+    "FirstName": "Grace",
+    "LastName": "Lee",
+    "Phone": "555-2222"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000MzZU0IAN",
+    "Email": "hank.west@xyz.com",
+    "FirstName": "Hank",
+    "LastName": "West",
+    "Phone": "555-2223"
+  }
+]
+INFO  2024-10-24 20:43:05,438 [[MuleRuntime].uber.05: [mss-dynamics-sfdc-contact-migration-uapi-v2].upsert-contact-sfdcFlow.BLOCKING @378d7e18] [processor: businessLogicFlow/processors/3/route/0/route/2/aggregator/processors/2; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] org.mule.runtime.core.internal.processor.LoggerMessageProcessor: {
+  "id": null,
+  "items": [
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5gFIAR",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5gFIAR",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": false,
+        "success": true,
+        "id": "003J400000Al3VsIAJ",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al3VsIAJ",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5gGIAR",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5gGIAR",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5gHIAR",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5gHIAR",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5gIIAR",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5gIIAR",
+      "statusCode": null,
+      "successful": true
+    }
+  ],
+  "successful": true
+}
+INFO  2024-10-24 20:43:09,371 [[MuleRuntime].uber.06: [mss-dynamics-sfdc-contact-migration-uapi-v2].batch-job-migrateContactsBatch-work-manager @5eba3403] [processor: businessLogicFlow/processors/3/route/0/route/2/aggregator/processors/0; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] org.mule.runtime.core.internal.processor.LoggerMessageProcessor: [
+  {
+    "Id": null,
+    "AccountId": "001J400000MzZU0IAN",
+    "Email": "ivy.nash@xyz.com",
+    "FirstName": "Ivy",
+    "LastName": "Nash",
+    "Phone": "555-2224"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000MzZU0IAN",
+    "Email": "jack.owens@xyz.com",
+    "FirstName": "Jack",
+    "LastName": "Owens",
+    "Phone": "555-2225"
+  },
+  {
+    "Id": "003J400000Al3W2IAJ",
+    "AccountId": "001J400000Mzc0lIAB",
+    "Email": "michael.jones@example.com",
+    "FirstName": "Michael",
+    "LastName": "Jones",
+    "Phone": "555-8765"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000Mzc0lIAB",
+    "Email": "kate.perez@global.com",
+    "FirstName": "Kate",
+    "LastName": "Perez",
+    "Phone": "555-3331"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000Mzc0lIAB",
+    "Email": "leo.ross@global.com",
+    "FirstName": "Leo",
+    "LastName": "Ross",
+    "Phone": "555-3332"
+  }
+]
+INFO  2024-10-24 20:43:28,716 [[MuleRuntime].uber.05: [mss-dynamics-sfdc-contact-migration-uapi-v2].upsert-contact-sfdcFlow.BLOCKING @378d7e18] [processor: businessLogicFlow/processors/3/route/0/route/2/aggregator/processors/2; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] org.mule.runtime.core.internal.processor.LoggerMessageProcessor: {
+  "id": null,
+  "items": [
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al54rIAB",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al54rIAB",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al54sIAB",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al54sIAB",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": false,
+        "success": true,
+        "id": "003J400000Al3W2IAJ",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al3W2IAJ",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al54tIAB",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al54tIAB",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5gUIAR",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5gUIAR",
+      "statusCode": null,
+      "successful": true
+    }
+  ],
+  "successful": true
+}
+INFO  2024-10-24 20:43:35,764 [[MuleRuntime].uber.06: [mss-dynamics-sfdc-contact-migration-uapi-v2].batch-job-migrateContactsBatch-work-manager @5eba3403] [processor: businessLogicFlow/processors/3/route/0/route/2/aggregator/processors/0; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] org.mule.runtime.core.internal.processor.LoggerMessageProcessor: [
+  {
+    "Id": null,
+    "AccountId": "001J400000Mzc0lIAB",
+    "Email": "mia.scott@global.com",
+    "FirstName": "Mia",
+    "LastName": "Scott",
+    "Phone": "555-3333"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000Mzc0lIAB",
+    "Email": "nick.taylor@global.com",
+    "FirstName": "Nick",
+    "LastName": "Taylor",
+    "Phone": "555-3334"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000Mzc0lIAB",
+    "Email": "olivia.ward@global.com",
+    "FirstName": "Olivia",
+    "LastName": "Ward",
+    "Phone": "555-3335"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000MzfCUIAZ",
+    "Email": "peter.young@tech.com",
+    "FirstName": "Peter",
+    "LastName": "Young",
+    "Phone": "555-4441"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000MzfCUIAZ",
+    "Email": "quincy.zhao@tech.com",
+    "FirstName": "Quincy",
+    "LastName": "Zhao",
+    "Phone": "555-4442"
+  }
+]
+INFO  2024-10-24 20:44:11,836 [[MuleRuntime].uber.05: [mss-dynamics-sfdc-contact-migration-uapi-v2].upsert-contact-sfdcFlow.BLOCKING @378d7e18] [processor: businessLogicFlow/processors/3/route/0/route/2/aggregator/processors/2; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] org.mule.runtime.core.internal.processor.LoggerMessageProcessor: {
+  "id": null,
+  "items": [
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al3A4IAJ",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al3A4IAJ",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al3A5IAJ",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al3A5IAJ",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5gyIAB",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5gyIAB",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5gzIAB",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5gzIAB",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5h0IAB",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5h0IAB",
+      "statusCode": null,
+      "successful": true
+    }
+  ],
+  "successful": true
+}
+INFO  2024-10-24 20:44:20,843 [[MuleRuntime].uber.06: [mss-dynamics-sfdc-contact-migration-uapi-v2].batch-job-migrateContactsBatch-work-manager @5eba3403] [processor: businessLogicFlow/processors/3/route/0/route/2/aggregator/processors/0; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] org.mule.runtime.core.internal.processor.LoggerMessageProcessor: [
+  {
+    "Id": null,
+    "AccountId": "001J400000MzfCUIAZ",
+    "Email": "rachel.baker@tech.com",
+    "FirstName": "Rachel",
+    "LastName": "Baker",
+    "Phone": "555-4443"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000Mze3oIAB",
+    "Email": "simon.carter@nextgen.com",
+    "FirstName": "Simon",
+    "LastName": "Carter",
+    "Phone": "555-5551"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000Mze3oIAB",
+    "Email": "terry.daniels@nextgen.com",
+    "FirstName": "Terry",
+    "LastName": "Daniels",
+    "Phone": "555-5552"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000Mze3oIAB",
+    "Email": "ursula.evans@nextgen.com",
+    "FirstName": "Ursula",
+    "LastName": "Evans",
+    "Phone": "555-5553"
+  },
+  {
+    "Id": null,
+    "AccountId": "001J400000Mze3oIAB",
+    "Email": "victor.franklin@nextgen.com",
+    "FirstName": "Victor",
+    "LastName": "Franklin",
+    "Phone": "555-5554"
+  }
+]
+INFO  2024-10-24 20:44:23,386 [[MuleRuntime].uber.10: [mss-dynamics-sfdc-contact-migration-uapi-v2].upsert-contact-sfdcFlow.BLOCKING @378d7e18] [processor: businessLogicFlow/processors/3/route/0/route/2/aggregator/processors/2; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] org.mule.runtime.core.internal.processor.LoggerMessageProcessor: {
+  "id": null,
+  "items": [
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5hcIAB",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5hcIAB",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5hdIAB",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5hdIAB",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5heIAB",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5heIAB",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5hfIAB",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5hfIAB",
+      "statusCode": null,
+      "successful": true
+    },
+    {
+      "exception": null,
+      "message": null,
+      "payload": {
+        "created": true,
+        "success": true,
+        "id": "003J400000Al5hgIAB",
+        "errors": [
+          
+        ]
+      },
+      "id": "003J400000Al5hgIAB",
+      "statusCode": null,
+      "successful": true
+    }
+  ],
+  "successful": true
+}
+INFO  2024-10-24 20:44:23,402 [[MuleRuntime].uber.06: [mss-dynamics-sfdc-contact-migration-uapi-v2].batch-job-migrateContactsBatch-work-manager @5eba3403] [processor: businessLogicFlow/processors/3/route/0/route/2/aggregator/processors/1; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] com.mulesoft.mule.runtime.module.batch.internal.DefaultBatchStep: Step upsertContactsInSalesforceStep finished processing all records for instance f6889a80-9219-11ef-876c-8cec4b58ad7e of job migrateContactsBatch
+INFO  2024-10-24 20:44:23,413 [[MuleRuntime].uber.07: [mss-dynamics-sfdc-contact-migration-uapi-v2].batch-management-work-manager @36cd9c70] [processor: ; event: ] com.mulesoft.mule.runtime.module.batch.internal.engine.DefaultBatchEngine: Starting execution of onComplete phase for instance f6889a80-9219-11ef-876c-8cec4b58ad7e of job migrateContactsBatch
+INFO  2024-10-24 20:44:24,379 [[MuleRuntime].uber.06: [mss-dynamics-sfdc-contact-migration-uapi-v2].businessLogicFlow.CPU_INTENSIVE @2ed129bc] [processor: businessLogicFlow/processors/3/route/1/processors/1; event: f27c12f0-9219-11ef-876c-8cec4b58ad7e] org.mule.runtime.core.internal.processor.LoggerMessageProcessor: Migration Report: 
+
+ Time [milliseconds]: 295353
+ Total Records: 25
+ Successful Records: 25
+ Failed Records: 0
+ Loaded Records: 25
+ Processed Records: 25
+INFO  2024-10-24 20:44:24,379 [[MuleRuntime].uber.07: [mss-dynamics-sfdc-contact-migration-uapi-v2].batch-management-work-manager @36cd9c70] [processor: businessLogicFlow/processors/3/route/1/processors/0; event: ] com.mulesoft.mule.runtime.module.batch.internal.engine.DefaultBatchEngine: Finished execution of onComplete phase for instance f6889a80-9219-11ef-876c-8cec4b58ad7e of job migrateContactsBatch
+INFO  2024-10-24 20:44:24,380 [[MuleRuntime].uber.07: [mss-dynamics-sfdc-contact-migration-uapi-v2].batch-management-work-manager @36cd9c70] [processor: businessLogicFlow/processors/3/route/1/processors/0; event: ] com.mulesoft.mule.runtime.module.batch.internal.engine.DefaultBatchEngine: Finishing execution for instance 'f6889a80-9219-11ef-876c-8cec4b58ad7e' of job 'migrateContactsBatch'.
+INFO  2024-10-24 20:44:24,381 [[MuleRuntime].uber.07: [mss-dynamics-sfdc-contact-migration-uapi-v2].batch-management-work-manager @36cd9c70] [processor: businessLogicFlow/processors/3/route/1/processors/0; event: ] com.mulesoft.mule.runtime.module.batch.internal.engine.DefaultBatchEngine: 
+

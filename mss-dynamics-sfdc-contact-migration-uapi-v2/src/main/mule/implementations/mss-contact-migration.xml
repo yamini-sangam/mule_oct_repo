@@ -140,7 +140,7 @@ output application/java
         
 </batch:on-complete>
     </batch:job>
-		<error-handler ref="global-error-handler" />
+	<error-handler ref="global-error-handler" />	
 
 
 </flow>

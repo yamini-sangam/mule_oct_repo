@@ -4,8 +4,6 @@ http:
 
 sf:
   user: "sdunna@miraclesoft.com"
-  password: "Yamini@2019"
-  token: "e9VOPj8Bblwo4GJ8tnJMkOou"
   
 syncAccount: "true"
 
@@ -14,3 +12,11 @@ batch:
     size: "100"
   agg:
     size: "5"
+
+database:
+  dynamics:
+    host: "172.17.35.52"
+    port: "3306"
+    user: "integration"
+    database: "digital_integrations_db"
+ 

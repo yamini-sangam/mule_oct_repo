@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
-	xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http"
-	xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
 	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="5cdbf348-f7f7-40db-8876-e3c6c9ab18dc" >
-		<salesforce:basic-connection username="${sf.user}" password="${sf.password}" securityToken="${sf.token}" />
+		<salesforce:basic-connection username="${sf.user}" password="${secure::sf.password}" securityToken="${secure::sf.token}" />
 	</salesforce:sfdc-config>
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="b18846c7-3960-44ec-81f1-eed6f3232104" >
 		<http:listener-connection host="${http.host}" port="${http.port}" />
 	</http:listener-config>
-	<db:config name="Database_Config" doc:name="Database Config" doc:id="d9bad236-074e-4159-85e4-83f258d633a7" >
-		<db:my-sql-connection host="172.17.35.52" port="3306" user="integration" password="integration" database="digital_integrations_db" />
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="3d14d793-6f3c-4541-995c-67cfdf8bbd0d" >
+		<db:my-sql-connection host="${database.dynamics.host}" port="${database.dynamics.port}" user="${database.dynamics.user}" password="${secure::database.dynamics.password}" database="${database.dynamics.database}" />
 	</db:config>
 	<configuration-properties doc:name="Configuration properties" doc:id="5404bc08-c2ce-4897-981d-c4a3acd76b14" file="dev.yaml" />
 	<configuration doc:name="Configuration" doc:id="aa33b53e-1426-406e-b99c-ccca70d6873a" defaultErrorHandler-ref="global-error-handler" />
+	<global-property doc:name="Global Property" doc:id="15afea0e-179a-4a89-8e3e-18b2a657d67a" name="env" value="dev" />
+	<global-property doc:name="Global Property" doc:id="9e899c9b-cfc6-4966-b015-ed0ae3720287" name="enc.key" value="yamini@123456789" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="7b36e259-e4fc-4957-9d83-4e3f8b95f299" file="secure-${env}.yaml" key="${enc.key}" />
+	
+
 </mule>

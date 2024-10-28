@@ -1,0 +1,514 @@
+{
+	"info": {
+		"_postman_id": "0c0e62e0-96a2-4dbd-99a1-1b6d93d7b4d6",
+		"name": "mss-dynamics-sfdc-contacts-migration-uapi-v2-PC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21763656"
+	},
+	"item": [
+		{
+			"name": "test-subflows",
+			"item": [
+				{
+					"name": "get-contact-and-account-by-timestamp-db",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/db/getContacts?timestamp=2023-01-01 10:30:00",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"db",
+								"getContacts"
+							],
+							"query": [
+								{
+									"key": "timestamp",
+									"value": "2023-01-01 10:30:00"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-contact-and-account-by-timestamp-db-sample",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8081/db/getContacts?timestamp=2023-01-01 10:30:00",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"db",
+										"getContacts"
+									],
+									"query": [
+										{
+											"key": "timestamp",
+											"value": "2023-01-01 10:30:00"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1341"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Oct 2024 10:59:06 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"contactid\": 4,\n        \"emailaddress1\": \"john.doe@example.com\",\n        \"firstname\": \"John\",\n        \"fullname\": \"John Doe\",\n        \"lastname\": \"Doe\",\n        \"parentcustomerid\": 1,\n        \"telephone1\": \"555-1234\",\n        \"contact_createdon\": \"2023-01-01T10:30:00\",\n        \"contact_modifiedon\": \"2023-01-01T11:00:00\",\n        \"account_name\": \"ABC Corporation\",\n        \"account_createdon\": \"2023-01-01T10:00:00\",\n        \"account_modifiedon\": \"2023-01-01T11:00:00\"\n    },\n    {\n        \"contactid\": 5,\n        \"emailaddress1\": \"jane.smith@example.com\",\n        \"firstname\": \"Jane\",\n        \"fullname\": \"Jane Smith\",\n        \"lastname\": \"Smith\",\n        \"parentcustomerid\": 2,\n        \"telephone1\": \"555-5678\",\n        \"contact_createdon\": \"2023-05-12T14:20:00\",\n        \"contact_modifiedon\": \"2023-05-12T15:00:00\",\n        \"account_name\": \"XYZ Enterprises\",\n        \"account_createdon\": \"2023-03-05T09:20:00\",\n        \"account_modifiedon\": \"2023-03-05T09:45:00\"\n    },\n    {\n        \"contactid\": 6,\n        \"emailaddress1\": \"michael.jones@example.com\",\n        \"firstname\": \"Michael\",\n        \"fullname\": \"Michael Jones\",\n        \"lastname\": \"Jones\",\n        \"parentcustomerid\": 3,\n        \"telephone1\": \"555-8765\",\n        \"contact_createdon\": \"2023-09-18T08:10:00\",\n        \"contact_modifiedon\": \"2023-09-18T09:30:00\",\n        \"account_name\": \"Global Solutions\",\n        \"account_createdon\": \"2023-07-12T14:30:00\",\n        \"account_modifiedon\": \"2023-07-12T14:50:00\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "get-contact-sfdc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"contactid\": 4,\r\n        \"emailaddress1\": \"john.doe@example.com\",\r\n        \"firstname\": \"John\",\r\n        \"fullname\": \"John Doe\",\r\n        \"lastname\": \"Doe\",\r\n        \"parentcustomerid\": 1,\r\n        \"telephone1\": \"555-1234\",\r\n        \"contact_createdon\": \"2023-01-01T10:30:00\",\r\n        \"contact_modifiedon\": \"2023-01-01T11:00:00\",\r\n        \"account_name\": \"ABC Corporation\",\r\n        \"account_createdon\": \"2023-01-01T10:00:00\",\r\n        \"account_modifiedon\": \"2023-01-01T11:00:00\"\r\n    },\r\n    {\r\n        \"contactid\": 5,\r\n        \"emailaddress1\": \"jane.smith@example.com\",\r\n        \"firstname\": \"Jane\",\r\n        \"fullname\": \"Jane Smith\",\r\n        \"lastname\": \"Smith\",\r\n        \"parentcustomerid\": 2,\r\n        \"telephone1\": \"555-5678\",\r\n        \"contact_createdon\": \"2023-05-12T14:20:00\",\r\n        \"contact_modifiedon\": \"2023-05-12T15:00:00\",\r\n        \"account_name\": \"XYZ Enterprises\",\r\n        \"account_createdon\": \"2023-03-05T09:20:00\",\r\n        \"account_modifiedon\": \"2023-03-05T09:45:00\"\r\n    },\r\n    {\r\n        \"contactid\": 6,\r\n        \"emailaddress1\": \"michael.jones@example.com\",\r\n        \"firstname\": \"Michael\",\r\n        \"fullname\": \"Michael Jones\",\r\n        \"lastname\": \"Jones\",\r\n        \"parentcustomerid\": 3,\r\n        \"telephone1\": \"555-8765\",\r\n        \"contact_createdon\": \"2023-09-18T08:10:00\",\r\n        \"contact_modifiedon\": \"2023-09-18T09:30:00\",\r\n        \"account_name\": \"Global Solutions\",\r\n        \"account_createdon\": \"2023-07-12T14:30:00\",\r\n        \"account_modifiedon\": \"2023-07-12T14:50:00\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/sfdc/getContact",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"sfdc",
+								"getContact"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-contact-sfdc-sample",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"contactid\": 4,\r\n        \"emailaddress1\": \"john.doe@example.com\",\r\n        \"firstname\": \"John\",\r\n        \"fullname\": \"John Doe\",\r\n        \"lastname\": \"Doe\",\r\n        \"parentcustomerid\": 1,\r\n        \"telephone1\": \"555-1234\",\r\n        \"contact_createdon\": \"2023-01-01T10:30:00\",\r\n        \"contact_modifiedon\": \"2023-01-01T11:00:00\",\r\n        \"account_name\": \"ABC Corporation\",\r\n        \"account_createdon\": \"2023-01-01T10:00:00\",\r\n        \"account_modifiedon\": \"2023-01-01T11:00:00\"\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/sfdc/getContact",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"sfdc",
+										"getContact"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "89"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Oct 2024 14:07:26 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"Id\": \"003J400000AkzWwIAJ\",\n        \"type\": \"Contact\",\n        \"Name\": \"John Doe\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "get-account-sfdc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n    {\r\n        \"contactid\": 4,\r\n        \"emailaddress1\": \"john.doe@example.com\",\r\n        \"firstname\": \"John\",\r\n        \"fullname\": \"John Doe\",\r\n        \"lastname\": \"Doe\",\r\n        \"parentcustomerid\": 1,\r\n        \"telephone1\": \"555-1234\",\r\n        \"contact_createdon\": \"2023-01-01T10:30:00\",\r\n        \"contact_modifiedon\": \"2023-01-01T11:00:00\",\r\n        \"account_name\": \"ABC Corporation\",\r\n        \"account_createdon\": \"2023-01-01T10:00:00\",\r\n        \"account_modifiedon\": \"2023-01-01T11:00:00\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/sfdc/getAccounts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"sfdc",
+								"getAccounts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-contact-sfdc-sample",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n    {\r\n        \"contactid\": 4,\r\n        \"emailaddress1\": \"john.doe@example.com\",\r\n        \"firstname\": \"John\",\r\n        \"fullname\": \"John Doe\",\r\n        \"lastname\": \"Doe\",\r\n        \"parentcustomerid\": 1,\r\n        \"telephone1\": \"555-1234\",\r\n        \"contact_createdon\": \"2023-01-01T10:30:00\",\r\n        \"contact_modifiedon\": \"2023-01-01T11:00:00\",\r\n        \"account_name\": \"ABC Corporation\",\r\n        \"account_createdon\": \"2023-01-01T10:00:00\",\r\n        \"account_modifiedon\": \"2023-01-01T11:00:00\"\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/sfdc/getAccounts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"sfdc",
+										"getAccounts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "96"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Oct 2024 14:29:43 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"Id\": \"001J400000MzZLbIAN\",\n        \"type\": \"Account\",\n        \"Name\": \"ABC Corporation\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "upsert-contact-sfdc",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": \"003J400000Al3W2IAJ\",\r\n        \"accountId\": \"001J400000Mzc0lIAB\",\r\n        \"contactid\": 6,\r\n        \"emailaddress1\": \"michael.jones@example.com\",\r\n        \"firstname\": \"Michael\",\r\n        \"fullname\": \"Michael Jones\",\r\n        \"lastname\": \"Jones\",\r\n        \"parentcustomerid\": 3,\r\n        \"telephone1\": \"555-8765\",\r\n        \"contact_createdon\": \"2023-09-18T08:10:00\",\r\n        \"contact_modifiedon\": \"2023-09-18T09:30:00\",\r\n        \"account_name\": \"Global Solutions\",\r\n        \"account_createdon\": \"2023-07-12T14:30:00\",\r\n        \"account_modifiedon\": \"2023-07-12T14:50:00\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/sfdc/upsertContact",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"sfdc",
+								"upsertContact"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "upsert-contact-sfdc-sample",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": \"003J400000Al3W2IAJ\",\r\n        \"accountId\": \"001J400000Mzc0lIAB\",\r\n        \"contactid\": 6,\r\n        \"emailaddress1\": \"michael.jones@example.com\",\r\n        \"firstname\": \"Michael\",\r\n        \"fullname\": \"Michael Jones\",\r\n        \"lastname\": \"Jones\",\r\n        \"parentcustomerid\": 3,\r\n        \"telephone1\": \"555-8765\",\r\n        \"contact_createdon\": \"2023-09-18T08:10:00\",\r\n        \"contact_modifiedon\": \"2023-09-18T09:30:00\",\r\n        \"account_name\": \"Global Solutions\",\r\n        \"account_createdon\": \"2023-07-12T14:30:00\",\r\n        \"account_modifiedon\": \"2023-07-12T14:50:00\"\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/sfdc/upsertContact",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"sfdc",
+										"upsertContact"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "357"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Oct 2024 13:48:22 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": null,\n    \"items\": [\n        {\n            \"exception\": null,\n            \"message\": null,\n            \"payload\": {\n                \"created\": false,\n                \"success\": true,\n                \"id\": \"003J400000Al3W2IAJ\",\n                \"errors\": []\n            },\n            \"id\": \"003J400000Al3W2IAJ\",\n            \"statusCode\": null,\n            \"successful\": true\n        }\n    ],\n    \"successful\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "create-account-sfdc",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n    {\r\n        \"contactid\": 4,\r\n        \"emailaddress1\": \"john.doe@example.com\",\r\n        \"firstname\": \"John\",\r\n        \"fullname\": \"John Doe\",\r\n        \"lastname\": \"Doe\",\r\n        \"parentcustomerid\": 1,\r\n        \"telephone1\": \"555-1234\",\r\n        \"contact_createdon\": \"2023-01-01T10:30:00\",\r\n        \"contact_modifiedon\": \"2023-01-01T11:00:00\",\r\n        \"account_name\": \"ABC Corporation2\",\r\n        \"account_createdon\": \"2023-01-01T10:00:00\",\r\n        \"account_modifiedon\": \"2023-01-01T11:00:00\"\r\n    }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/sfdc/createAccount",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"sfdc",
+								"createAccount"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create-account-sfdc-sample",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n    {\r\n        \"contactid\": 4,\r\n        \"emailaddress1\": \"john.doe@example.com\",\r\n        \"firstname\": \"John\",\r\n        \"fullname\": \"John Doe\",\r\n        \"lastname\": \"Doe\",\r\n        \"parentcustomerid\": 1,\r\n        \"telephone1\": \"555-1234\",\r\n        \"contact_createdon\": \"2023-01-01T10:30:00\",\r\n        \"contact_modifiedon\": \"2023-01-01T11:00:00\",\r\n        \"account_name\": \"ABC Corporation2\",\r\n        \"account_createdon\": \"2023-01-01T10:00:00\",\r\n        \"account_modifiedon\": \"2023-01-01T11:00:00\"\r\n    }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/sfdc/createAccount",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"sfdc",
+										"createAccount"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "39"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Oct 2024 14:28:07 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"AccountID\": \"001J400000MzecKIAR\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "200-upsertContacts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test for 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/migratecontacts?timestamp=2024-10-16 08:36:00",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"migratecontacts"
+					],
+					"query": [
+						{
+							"key": "timestamp",
+							"value": "2024-10-16 08:36:00"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "500-upsertContacts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test for 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/migratecontacts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"migratecontacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "405-upsertContacts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test for 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/sample1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"sample1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
